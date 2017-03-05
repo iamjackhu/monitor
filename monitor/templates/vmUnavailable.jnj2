@@ -1,0 +1,50 @@
+<html>
+<body>
+    <div><p><u>{{title}}</u></p></div>
+    <div>
+        <p>{{description}}</p>
+    </div>
+    <table border="1"  cellpadding="2" cellspacing="1" width="400">
+        <thead>
+            <tr>
+                {% for header in headers %}
+                    <th>{{header}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in rows %}
+                <tr align="center">
+                    {% for vv in item %}
+                    <td>{{vv}}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br/>
+    <br/>
+    <div>
+    <hr style="FILTER: alpha(opacity=100,finishopacity=0,style=3)"  color=#987cb9 SIZE=3 align="left">
+    <div>
+        <p>
+            本邮件是由<strong>System Audit Program</strong> 发出. 具体功能如下(如果已经了解,请忽略):
+        </p>
+        <ul>
+            <li>开机自启动.如果是断电重启,会检查openstack各组件(mysql,rabbitmq)等启动状态</li>
+            <li>会周期性检查物理机和虚拟机(是否可以ping通) 已经 monitor 组件是否运行</li>
+            <li>出现异常后会发送email</li>
+        </ul>
+        <p>
+            为了避免全网ssh,对available check做了优化,从influxdb查询 host 或者 vm 过去一段时间的数据
+        </p>
+        <ul>
+            <li>如果数据存在,则host 或者 vm 状态为 <strong>正常</strong></li>
+            <li>如果未查询到相关数据,则第一步检查是否ping通,如果ping不通,则 host 或者 vm 状态为 <strong>不可达</strong> </li>
+            <li>如果可以ping通,则ssh 到 host 或者 vm 上检查monitor 进程是运行,如果没有运行,则状态为 <strong>监控进程异常</strong></strong></li>
+            <li>如果监控进程也在运行,在状态为<strong>异常(未知原因)</strong></li>
+        </ul>
+    </div>
+        </div>
+</body>
+</html>
